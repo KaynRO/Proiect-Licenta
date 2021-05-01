@@ -40,7 +40,7 @@ test_statement $# "1" $RED"[!] Please provide the script 1 argument ONLY which s
 
 
 # Install and run apache2 in order to host the webserver
-check_status apt-get install -y apache2 $RED"[!] Apache2 could not be installed!"$ANSII_END
+check_status apt-get install --yes --quiet apache2 $RED"[!] Apache2 could not be installed!"$ANSII_END
 check_status service apache2 start $RED"[!] Apache2 could not be started!"$ANSII_END
 echo -e $GREEN"[+] Apache2 up and running."$ANSII_END
 
