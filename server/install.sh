@@ -40,7 +40,7 @@ test_statement $# "1" $RED"[!] Please provide the script 1 argument ONLY which s
 
 
 # Install and run apache2 in order to host the webserver
-check_status apt-get install --yes --quiet apache2 $RED"[!] Apache2 could not be installed!"$ANSII_END
+check_status apt-get install --qq apache2 $RED"[!] Apache2 could not be installed!"$ANSII_END
 check_status service apache2 start $RED"[!] Apache2 could not be started!"$ANSII_END
 echo -e $GREEN"[+] Apache2 up and running."$ANSII_END
 
@@ -57,5 +57,5 @@ echo -e $GREEN"[+] Files successfully downloaded."$ANSII_END
 
 
 # Move the server.sh file inside root directory and start it
-check_status bash /root/server.sh $PORT $RED"[!] Something bad happened while running server.sh!"$ANSII_END
-echo -e $GREEN"[+] server.sh started successfully."$ANSII_END
+echo -e $GREEN"[+] Running server.sh."$ANSII_END
+bash /root/server.sh $PORT &
