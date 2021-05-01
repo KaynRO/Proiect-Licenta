@@ -94,5 +94,7 @@ do
 	do
 		process_file $i &
 	done
+	
+	sleep 6
 done
 
