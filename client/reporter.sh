@@ -21,8 +21,8 @@ do
 	# at each iteration
 	if [[ `wc -l < $LOGFILE` -ge $(($i * 3)) ]]
 	then
-		lines="`head -n 3 $LOGFILE` | sed 's/\[+\] New suspicious\/malicious file:/    File Path:/g' | sed 's/Quarantined:/Quarantined under:/g'"
-		echo -e "	New malicious file found on: `hostname`@`hostname -I`\n$lines" > $TMP_FILE
+		lines="`head -n 3 $LOGFILE`"
+		echo -e "[+] New alert from `hostname`@`hostname -I`\n$lines" > $TMP_FILE
 
 		# Remove immutable attribute, move the first 3 lines of the logfile to the end and make it immutable again.
 		chattr -i $LOGFILE

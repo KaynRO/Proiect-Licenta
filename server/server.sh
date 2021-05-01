@@ -14,5 +14,5 @@ while true
 do
 	# Listen for any incomming message and place it in the log file
 	nc -lp $PORT >> $LOGFILE
-	echo -e "[+] Received:\n`tail -n4 $LOGFILE`"
+	echo -e "`tail -n4 $LOGFILE`"
 done
