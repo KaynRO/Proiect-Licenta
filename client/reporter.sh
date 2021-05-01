@@ -19,7 +19,7 @@ do
 	# Get the first 3 lines from the logfile (equivalent to one file entry) and put the information
 	# in a tmp file. This should happen if there are new entries in the logfile which can be counted
 	# at each iteration
-	if [[ `wc -l $LOGFILE` -ge $(($i * 3)) ]]
+	if [[ `wc -l < $LOGFILE` -ge $(($i * 3)) ]]
 	then
 		lines=`head -n 3 $LOGFILE`
 		echo -e `hostname -i\n``hostname\n`$lines > $TMP_FILE
