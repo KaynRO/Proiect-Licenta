@@ -9,7 +9,7 @@ PORT=1337
 LOGFILE='./log.txt'
 
 
-test -f "$LOG_FILE" || touch $LOG_FILE
+test -f "$LOGFILE" || touch $LOGFILE
 while true
 do
 	# Listen for any incomming message and place it in the log file
