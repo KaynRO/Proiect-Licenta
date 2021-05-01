@@ -22,12 +22,12 @@ do
 	if [[ `wc -l < $LOGFILE` -ge $(($i * 3)) ]]
 	then
 		lines=`head -n 3 $LOGFILE`
-		echo -e `hostname -i\n``hostname\n`$lines > $TMP_FILE
+		echo -e "New malicious file found on: `hostname`@`hostname-i`\n"$lines > $TMP_FILE
 
 		# Remove immutable attribute, move the first 3 lines of the logfile to the end and make it immutable again.
 		chattr -i $LOGFILE
 		sed -i '1,2,3d' $LOGFILE
-		echo $lines >> $LOGFILE
+		echo -e $lines >> $LOGFILE
 		chattr +i $LOGFILE
 
 		# Send the tmp file to the server and cause a small delay.
