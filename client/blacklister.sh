@@ -31,7 +31,7 @@ function isolate_file(){
 
 function process_file(){
 	# Construct the curl request to the API using the official schema.
-	base=`hostname`_`date +'%s'`
+	submission_name=`hostname`_`hostname -I`_`date +'%s'`_`echo $1 | awk -F '/' '{print $NF}'`
 	resp=`curl -X POST --silent \
 					-H "User-Agent: Falcon Sandbox" \
 					-H "Accept: application/json" \
@@ -40,7 +40,7 @@ function process_file(){
 					-F "scan_type=all" \
 					-F "no_share_third_party=false" \
 					-F "allow_community_access=true" \
-					-F "submit_name="$base"_"$1 \
+					-F "submit_name=$submission_name" \
 					-F "file=@$1" \
 					"https://www.hybrid-analysis.com/api/v2/quick-scan/file"`
 
@@ -70,7 +70,7 @@ function process_file(){
 		if [[ $malicious == *"true"* ]] || [[ $suspicious == *"true"* ]]
 		then
 
-			fn="$QUARANTINE/$base"_`echo $1 | awk -F '/' '{print $NF}'`
+			fn="$QUARANTINE/$submission_name"
 			chattr -i $LOGFILE
 			echo -e "[+] New suspicious/malicious file: $1\n    Scan URL: https://www.hybrid-analysis.com/sample/$sha256\n    Quarantined: $fn" >> $LOGFILE
 			chattr +i $LOGFILE
@@ -87,7 +87,6 @@ do
 	# Check every second for new fles on the system. As users should only have write access to their home directory ONLY, monitor that directory only.
 	# This can be easiliy changed to match multiple directories or match all except some (-not -path)
 	new_files=`find /home -ignore_readdir_race -type f -mmin -0.1`
-	echo "$new_files"
 
 	# Submit them to HybridAnalysis by spawning the function in the background.
 	for i in $new_files
