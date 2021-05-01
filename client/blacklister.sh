@@ -31,7 +31,7 @@ function isolate_file(){
 
 function process_file(){
 	# Construct the curl request to the API using the official schema.
-	submission_name=`hostname`_`hostname -I`_`date +'%s'`_`echo $1 | awk -F '/' '{print $NF}'`
+	submission_name=`hostname`_`hostname -I | sed 's/ //g'`_`date +'%s'`_`echo $1 | awk -F '/' '{print $NF}'`
 	resp=`curl -X POST --silent \
 					-H "User-Agent: Falcon Sandbox" \
 					-H "Accept: application/json" \
