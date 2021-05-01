@@ -50,9 +50,9 @@ echo -e $GREEN"[+] Apache2 up and running."$ANSII_END
 #check_status curl --silent https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/client/blacklister.sh?token=AEK5VX7EL2EXBC34FCXUA4TARVNZ4 > /var/www/html/blacklister.sh $RED"[!] blacklister.sh script failed while downloading!"$ANSII_END
 #check_status curl --silent https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/client/reporter.sh?token=AEK5VX5SGEPUI4DAOZML2YTARVN2O > /var/www/html/reporter.sh $RED"[!] reporter.sh script failed while downloading!"$ANSII_END
 cd /tmp ; git clone https://github.com/KaynRO/Proiect-Licenta ; cd Proiect-Licenta
-cp /server/server.sh /root/server.sh
-cp /client/blacklister.sh /var/www/html/blacklister.sh
-cp /client/reporter.sh /var/www/html/reporter.sh
+cp server/server.sh /root/server.sh
+cp client/blacklister.sh /var/www/html/blacklister.sh
+cp client/reporter.sh /var/www/html/reporter.sh
 echo -e $GREEN"[+] Files successfully downloaded."$ANSII_END
 
 
