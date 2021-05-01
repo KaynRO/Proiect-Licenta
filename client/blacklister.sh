@@ -87,15 +87,12 @@ do
 	# Check every second for new fles on the system. As users should only have write access to their home directory ONLY, monitor that directory only.
 	# This can be easiliy changed to match multiple directories or match all except some (-not -path)
 	new_files=`find /home	-ignore_readdir_race -type f \
-							-mmin -0.01`
+							-mmin -0.1`
 
 	# Submit them to HybridAnalysis by spawning the function in the background.
 	for i in $new_files
 	do
 		process_file $i &
 	done
-
-	# Sleep for one second to avoid duplicate files detection.
-	sleep 1
 done
 
