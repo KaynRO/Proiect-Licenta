@@ -86,7 +86,7 @@ test_statement `whoami` "root" $RED"[!] You must be root to run this."$ANSII_END
 
 
 # Check if IP/domain is given as the parameter
-test_statement $# "2" $RED"[!] Please provide the script 2 arguments ONLY which should be the server IP"$ANSII_END
+test_statement $# "1" $RED"[!] Please provide the script 2 arguments ONLY which should be the server IP"$ANSII_END
 
 
 # Setting up the malware detection service
