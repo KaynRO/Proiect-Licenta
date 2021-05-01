@@ -40,7 +40,7 @@ function process_file(){
 					-F "scan_type=all" \
 					-F "no_share_third_party=false" \
 					-F "allow_community_access=true" \
-					-F "submit_name=$base_$1" \
+					-F "submit_name="$base"_"$1 \
 					-F "file=@$1" \
 					"https://www.hybrid-analysis.com/api/v2/quick-scan/file"`
 
@@ -86,8 +86,8 @@ while true
 do
 	# Check every second for new fles on the system. As users should only have write access to their home directory ONLY, monitor that directory only.
 	# This can be easiliy changed to match multiple directories or match all except some (-not -path)
-	new_files=`find /home	-ignore_readdir_race -type f \
-							-cmin -0.01`
+	new_files=`find /home -ignore_readdir_race -type f -mmin -0.1`
+	echo "$new_files"
 
 	# Submit them to HybridAnalysis by spawning the function in the background.
 	for i in $new_files
@@ -95,6 +95,6 @@ do
 		process_file $i &
 	done
 
-	sleep 1
+	sleep 5
 done
 
