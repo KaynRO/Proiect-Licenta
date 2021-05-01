@@ -3,7 +3,7 @@
 
 # The server IP and PORT will be given as parameters to script/service
 SERVER_IP=$1
-SERVER_PORT=$2
+SERVER_PORT=1337
 
 
 # Define the logfile where the script that detects malware will output it's results

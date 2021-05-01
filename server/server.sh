@@ -2,7 +2,7 @@
 
 
 # Define the local port that the  will use in order to receive messages from clients
-PORT=$1
+PORT=1337
 
 
 # The file that will store all incomming news

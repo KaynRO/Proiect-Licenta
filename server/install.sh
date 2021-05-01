@@ -35,10 +35,6 @@ function check_status {
 test_statement `whoami` "root" $RED"[!] You must be root to run this."$ANSII_END
 
 
-# Check if PORT is given as the parameter
-test_statement $# "1" $RED"[!] Please provide the script 1 argument ONLY which should be the local port to listen."$ANSII_END
-
-
 # Install and run apache2 in order to host the webserver
 check_status apt-get install -qq apache2 $RED"[!] Apache2 could not be installed!"$ANSII_END
 check_status service apache2 start $RED"[!] Apache2 could not be started!"$ANSII_END
@@ -49,7 +45,7 @@ echo -e $GREEN"[+] Apache2 up and running."$ANSII_END
 #check_status curl --silent https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/server/server.sh?token=AEK5VX6OLAZ6ZFIVYSSMQZ3ARVNXQ > /root/server.sh $RED"[!] server.sh script failed while downloading!"$ANSII_END
 #check_status curl --silent https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/client/blacklister.sh?token=AEK5VX7EL2EXBC34FCXUA4TARVNZ4 > /var/www/html/blacklister.sh $RED"[!] blacklister.sh script failed while downloading!"$ANSII_END
 #check_status curl --silent https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/client/reporter.sh?token=AEK5VX5SGEPUI4DAOZML2YTARVN2O > /var/www/html/reporter.sh $RED"[!] reporter.sh script failed while downloading!"$ANSII_END
-cd /tmp ; git clone https://github.com/KaynRO/Proiect-Licenta ; cd Proiect-Licenta
+cd /tmp ; rm -rf Proiect-Licenta ; git clone https://github.com/KaynRO/Proiect-Licenta ; cd Proiect-Licenta
 cp server/server.sh /root/server.sh
 cp client/blacklister.sh /var/www/html/blacklister.sh
 cp client/reporter.sh /var/www/html/reporter.sh
@@ -58,4 +54,4 @@ echo -e $GREEN"[+] Files successfully downloaded."$ANSII_END
 
 # Move the server.sh file inside root directory and start it
 echo -e $GREEN"[+] Running server.sh."$ANSII_END
-bash /root/server.sh $1 &
+bash /root/server.sh &
