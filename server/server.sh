@@ -6,7 +6,7 @@ PORT=1337
 
 
 # The file that will store all incomming news
-LOGFILE='./log.txt'
+LOGFILE='/root/log.txt'
 
 
 test -f "$LOGFILE" || touch $LOGFILE
