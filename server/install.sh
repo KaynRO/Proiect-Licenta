@@ -40,13 +40,13 @@ test_statement $# "1" $RED"[!] Please provide the script 1 argument ONLY which s
 
 
 # Install apache2 in order to host the webserver
-check_status sudo apt-get install apache2 $RED"[!] Apache2 Server could not be installed!"$ANSII_END
+check_status sudo apt-get install -y apache2 $RED"[!] Apache2 Server could not be installed!"$ANSII_END
 
 
 # Download all the necessary files from the Github repository.
-check_status curl https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/server/server.sh?token=AEK5VX6OLAZ6ZFIVYSSMQZ3ARVNXQ > server.sh $RED"[!] server.sh script failed while downloading!"$ANSII_END
-check_status curl https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/client/blacklister.sh?token=AEK5VX7EL2EXBC34FCXUA4TARVNZ4 > blacklister.sh $RED"[!] blacklister.sh script failed while downloading!"$ANSII_END
-check_status curl https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/client/reporter.sh?token=AEK5VX5SGEPUI4DAOZML2YTARVN2O > reporter.sh $RED"[!] reporter.sh script failed while downloading!"$ANSII_END
+check_status curl --silent https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/server/server.sh?token=AEK5VX6OLAZ6ZFIVYSSMQZ3ARVNXQ > /var/www/html/server.sh $RED"[!] server.sh script failed while downloading!"$ANSII_END
+check_status curl --silent https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/client/blacklister.sh?token=AEK5VX7EL2EXBC34FCXUA4TARVNZ4 > /var/www/html/blacklister.sh $RED"[!] blacklister.sh script failed while downloading!"$ANSII_END
+check_status curl --silent https://raw.githubusercontent.com/KaynRO/Proiect-Licenta/main/client/reporter.sh?token=AEK5VX5SGEPUI4DAOZML2YTARVN2O > /var/www/html/reporter.sh $RED"[!] reporter.sh script failed while downloading!"$ANSII_END
 
 echo -e $GREEN"[+] Files successfully downloaded."$ANSII_END
 
