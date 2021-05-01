@@ -96,6 +96,6 @@ do
 	done
 
 	# Sleep for one second to avoid duplicate files detection.
-	sleep 10
+	sleep 6
 done
 
