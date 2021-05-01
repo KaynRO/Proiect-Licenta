@@ -22,10 +22,11 @@ do
 	if [[ `wc -l < $LOGFILE` -ge $(($i * 3)) ]]
 	then
 		lines="`head -n 3 $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
-		echo -e "[+] New alert from `hostname`@`hostname -I:`\n$lines" > $TMP_FILE
+		echo -e "[+] New alert from `hostname`@`hostname -I`:\n$lines" > $TMP_FILE
 
 		# Remove immutable attribute, move the first 3 lines of the logfile to the end and make it immutable again.
 		chattr -i $LOGFILE
+		lines="`head -n 3 $LOGFILE`"
 		sed -i '1,2,3d' $LOGFILE
 		echo -e "$lines" >> $LOGFILE
 		chattr +i $LOGFILE
