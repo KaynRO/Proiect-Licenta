@@ -12,7 +12,7 @@ test -f "$LOGFILE" || touch $LOGFILE
 
 # Listen for any incomming message and place it in the log file
 i=0
-nc -lpk $PORT >> $LOGFILE &
+nc -klp $PORT >> $LOGFILE &
 
 
 # Check if there is any new line in logfile and print it to stdout
