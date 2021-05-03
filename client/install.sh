@@ -95,3 +95,4 @@ create_service $URL_MALWARE blacklister
 
 # Setting up the log reporter service
 create_service $URL_REPORTER reporter $1
+echo -e $YELLOW"================================================================="$ANSII_END

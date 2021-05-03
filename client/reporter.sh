@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-# The server IP and PORT will be given as parameters to script/service
+# The server IP will be given as argument to the script. The PORT is statically defined but can be changed.
 SERVER_IP=$1
 SERVER_PORT=1337
 
