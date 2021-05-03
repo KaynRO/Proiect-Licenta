@@ -15,7 +15,7 @@ test -f "$LOGFILE" || touch $LOGFILE
 i=0
 nc -lpk $PORT >> $LOGFILE &
 
-while True
+while true
 do
 	new_i=`wc -l < $LOGFILE`
 	if [[ $i -ne $new_i ]]
