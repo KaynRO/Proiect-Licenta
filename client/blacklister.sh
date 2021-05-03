@@ -23,7 +23,7 @@ function isolate_file(){
 	# If file is malicious or suspicious, move them to a temp folder, change owner to root and change permissions.
 	# Also, make the file immutable to assure no one ever touches it in any way.
 	mv $1 $2
-	chown root:root $fn
+	chown root:root $2
 	chmod 600 $2
 	chattr +i $2
 }
@@ -31,7 +31,7 @@ function isolate_file(){
 
 function process_file(){
 	# Construct the curl request to the API using the official schema.
-	submission_name=`hostname`_`hostname -I | sed 's/ //g'`_`date +'%s'`_`echo $1 | awk -F '/' '{print $NF}'`
+	submission_name="`hostname`_`hostname -I | sed 's/ //g'`_`date +'%s'`_`echo $1 | awk -F '/' '{print $NF}'`"
 	resp=`curl -X POST --silent \
 					-H "User-Agent: Falcon Sandbox" \
 					-H "Accept: application/json" \
@@ -74,7 +74,7 @@ function process_file(){
 			chattr -i $LOGFILE
 			echo -e "[+] New suspicious/malicious file: $1\n    Scan URL: https://www.hybrid-analysis.com/sample/$sha256\n    Quarantined: $fn" >> $LOGFILE
 			chattr +i $LOGFILE
-			isolate_file $1 $fn
+			isolate_file $1 "$fn"
 		fi
 	fi
 }
