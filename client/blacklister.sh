@@ -72,7 +72,7 @@ function process_file(){
 
 			fn="$QUARANTINE/$submission_name"
 			chattr -i $LOGFILE
-			echo -e "[+] New suspicious/malicious file: $1\n    Scan URL: https://www.hybrid-analysis.com/sample/$sha256\n    Quarantined: $fn" >> $LOGFILE
+			echo -e "[+] New suspicious/malicious file: $1\n    Scan URL: https://www.hybrid-analysis.com/sample/$sha256\n    Quarantined: $fn\n    Timestamp: `date +'%R %d/%m/%Y'`" >> $LOGFILE
 			chattr +i $LOGFILE
 			isolate_file $1 "$fn"
 		fi

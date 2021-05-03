@@ -20,17 +20,19 @@ do
 	# Get the first 3 lines from the logfile (equivalent to one alert entry) and put the information
 	# in a tmp file. This should happen if there are new entries in the logfile which can be counted
 	# at each iteration
-	if [[ `wc -l < $LOGFILE` -ge $(($i * 3)) ]]
+	if [[ `wc -l < $LOGFILE` -ge $(($i * 4)) ]]
 	then
-		lines="`head -n 3 $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
-		echo -e "[+] New alert from `hostname`@`hostname -I` at `date +'%R %d/%m/%Y'`:\n$lines" > $TMP_FILE
+		lines="`head -n 4 $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
+		echo -e "[+] New alert from `hostname`@`hostname -I | sed 's/ //g'`:\n$lines" > $TMP_FILE
+
 
 		# Remove immutable attribute, move the first 3 lines of the logfile to the end and make it immutable again.
 		chattr -i $LOGFILE
 		lines="`head -n 3 $LOGFILE`"
-		sed -i '1,3d' $LOGFILE
+		sed -i '1,4d' $LOGFILE
 		echo -e "$lines" >> $LOGFILE
 		chattr +i $LOGFILE
+
 
 		# Send the tmp file to the server and cause a small delay.
 		nc -w 3 $SERVER_IP $SERVER_PORT < $TMP_FILE
