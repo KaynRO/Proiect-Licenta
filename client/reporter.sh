@@ -23,7 +23,7 @@ do
 	if [[ `wc -l < $LOGFILE` -ge $(($i * 3)) ]]
 	then
 		lines="`head -n 3 $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
-		echo -e "[+] New alert from `hostname`@`hostname -I` at `date`:\n$lines" > $TMP_FILE
+		echo -e "[+] New alert from `hostname`@`hostname -I` at `date +'%R %d/%m/%Y'`:\n$lines" > $TMP_FILE
 
 		# Remove immutable attribute, move the first 3 lines of the logfile to the end and make it immutable again.
 		chattr -i $LOGFILE
