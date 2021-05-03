@@ -25,12 +25,11 @@ do
 	then
 		lines="`awk 'NR<='$new_i'&&NR>='$i $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
 		echo -e "[+] New alert from `hostname`@`hostname -I | sed 's/ //g'`:\n$lines" > $TMP_FILE
-		
+		i=$new_i
 
 		# Send the tmp file to the server and cause a small delay.
 		nc -w 3 $SERVER_IP $SERVER_PORT < $TMP_FILE
 		sleep 1
-		i=$((i+1))
 	fi
 done
 
