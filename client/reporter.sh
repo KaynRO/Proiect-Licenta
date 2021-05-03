@@ -28,7 +28,7 @@ do
 
 		# Remove immutable attribute, move the first 3 lines of the logfile to the end and make it immutable again.
 		chattr -i $LOGFILE
-		lines="`head -n 3 $LOGFILE`"
+		lines="`head -n 4 $LOGFILE`"
 		sed -i '1,4d' $LOGFILE
 		echo -e "$lines" >> $LOGFILE
 		chattr +i $LOGFILE
