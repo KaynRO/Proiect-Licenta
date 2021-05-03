@@ -10,9 +10,17 @@ LOGFILE='/root/log.txt'
 
 
 test -f "$LOGFILE" || touch $LOGFILE
-while true
+
+# Listen for any incomming message and place it in the log file
+i=0
+nc -lpk $PORT >> $LOGFILE &
+
+while True
 do
-	# Listen for any incomming message and place it in the log file
-	nc -lp $PORT >> $LOGFILE
-	echo -e "`tail -n4 $LOGFILE`"
+	new_i=`wc -l < $LOGFILE`
+	if [[ $i -ne $new_i ]]
+	then
+		awk "NR<="$new_i"&&NR>="$i $LOGFILE
+		i=$new_i
+	fi
 done
