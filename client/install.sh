@@ -61,10 +61,13 @@ function create_service {
 	# Create a new service on the host and set it properly
 	cat <<- EOF > /etc/systemd/system/$2.service
 	[Unit]
+	Description=$2 service
 	After=network.target
 
 	[Service]
 	ExecStart=/usr/local/bin/$2.sh $3
+	Restart=always
+	RestartSec=3
 
 	[Install]
 	WantedBy=default.target

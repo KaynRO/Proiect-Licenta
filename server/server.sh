@@ -21,7 +21,7 @@ do
 	new_i=`wc -l < $LOGFILE`
 	if [[ $i -ne $new_i ]]
 	then
-		awk "NR<="$new_i"&&NR>="$i $LOGFILE
+		awk "NR<"$new_i"&&NR>"$i $LOGFILE
 		i=$new_i
 	fi
 done

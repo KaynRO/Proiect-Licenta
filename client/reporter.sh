@@ -23,7 +23,7 @@ do
 	new_i=`wc -l < $LOGFILE`
 	if [[ $i -ne $new_i ]]
 	then
-		lines="`awk 'NR<='$new_i'&&NR>='$i $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
+		lines="`awk 'NR<='$new_i'&&NR>'$i $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
 		echo -e "[+] New alert from `hostname`@`hostname -I | sed 's/ //g'`:\n$lines" > $TMP_FILE
 		i=$new_i
 
