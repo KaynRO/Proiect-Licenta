@@ -16,15 +16,14 @@ TMP_FILE='/tmp/.new_lines.tmp'
 
 while true
 do
-	# If there are at least 4 lines in the logfile(at least one alert entry), then extract them and consume them by sending
-	# to the server in a formatted file.
-	lines=`head -n 4 $LOGFILE`
+	# If the logfile is not empty, extract one alert entry (4 lines) and consume them by sending to the server
 	if [[ `wc -l $LOGFILE` -ne 0 ]]
 	then
-		lines="`awk 'NR<='$new_i'&&NR>'$i $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
+		lines=
+		lines="`head -n 4 $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
 		echo -e "[+] New alert from `hostname`@`hostname -I | sed 's/ //g'`:\n$lines" > $TMP_FILE
 
-		# make sure to make the logfile not immutable before removing lines and add the attribute after
+		# Make sure to make the logfile not immutable before removing lines and add the attribute after
 		chattr -i $LOGFILE
 		sed -i '1,4d' $LOGFILE
 		chattr +i $LOGFILE
