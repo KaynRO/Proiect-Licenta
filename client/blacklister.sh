@@ -13,7 +13,7 @@ function init(){
 	# malware not being detected, set file attribute to immutable. This can also be used as a syncronization mechanism
 	mkdir $QUARANTINE 2> /dev/null
 	chmod -R 660 $QUARANTINE
-	touch $LOGFILE 2> /dev/null
+	test -f "$LOGFILE" || touch $LOGFILE
 	chattr +i $LOGFILE
 
 }

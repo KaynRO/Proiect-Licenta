@@ -8,6 +8,7 @@ SERVER_PORT=1337
 
 # Define the logfile where the script that detects malware will output it's results
 LOGFILE="/root/log.txt"
+test -f "$LOGFILE" || touch $LOGFILE
 
 
 # A temporary files that hold the newly added lines to the logfile
