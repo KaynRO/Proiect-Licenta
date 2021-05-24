@@ -29,7 +29,7 @@ do
 
 		# Send the tmp file to the server and cause a small delay.
 		nc -w 3 $SERVER_IP $SERVER_PORT < $TMP_FILE
-		sleep 1
 	fi
+	sleep 1
 done
 
