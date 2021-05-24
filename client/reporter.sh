@@ -17,7 +17,7 @@ TMP_FILE='/tmp/.new_lines.tmp'
 while true
 do
 	# If the logfile is not empty, extract one alert entry (4 lines) and consume them by sending to the server
-	if [[ `wc -l $LOGFILE` -ne 0 ]]
+	if [[ `wc -l < $LOGFILE` -ne 0 ]]
 	then
 		lines="`head -n 4 $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
 		echo -e "[+] New alert from `hostname`@`hostname -I | sed 's/ //g'`:\n$lines" > $TMP_FILE
