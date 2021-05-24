@@ -19,7 +19,7 @@ do
 	# If there are at least 4 lines in the logfile(at least one alert entry), then extract them and consume them by sending
 	# to the server in a formatted file.
 	lines=`head -n 4 $LOGFILE`
-	if [[ `wc -l $LOGFILE` -ge 4 ]]
+	if [[ `wc -l $LOGFILE` -ne 0 ]]
 	then
 		lines="`awk 'NR<='$new_i'&&NR>'$i $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
 		echo -e "[+] New alert from `hostname`@`hostname -I | sed 's/ //g'`:\n$lines" > $TMP_FILE
