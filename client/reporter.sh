@@ -1,4 +1,4 @@
-#!/bin/bash
+	#!/bin/bash
 
 
 # The server IP will be given as argument to the script. The PORT is statically defined but can be changed.
@@ -14,18 +14,20 @@ LOGFILE="/root/log.txt"
 TMP_FILE='/tmp/.new_lines.tmp'
 
 
-i=0
 while true
 do
-	# Get the first 3 lines from the logfile (equivalent to one alert entry) and put the information
-	# in a tmp file. This should happen if there are new entries in the logfile which can be counted
-	# at each iteration
-	new_i=`wc -l < $LOGFILE`
-	if [[ $i -ne $new_i ]]
+	# If there are at least 4 lines in the logfile(at least one alert entry), then extract them and consume them by sending
+	# to the server in a formatted file.
+	lines=`head -n 4 $LOGFILE`
+	if [[ `wc -l $TMP_FILE` -ge 4 ]]
 	then
 		lines="`awk 'NR<='$new_i'&&NR>'$i $LOGFILE | sed 's/\[+\]/   /g' | sed 's/^/    /g'`"
 		echo -e "[+] New alert from `hostname`@`hostname -I | sed 's/ //g'`:\n$lines" > $TMP_FILE
-		i=$new_i
+
+		# make sure to make the logfile not immutable before removing lines and add the attribute after
+		chattr -i $LOGFILE
+		sed -i '1,4d' $LOGFILE
+		chattr +i $LOGFILE
 
 		# Send the tmp file to the server and cause a small delay.
 		nc -w 3 $SERVER_IP $SERVER_PORT < $TMP_FILE
