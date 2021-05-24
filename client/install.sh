@@ -17,6 +17,9 @@ ANSII_END="\e[0m"
 systemctl stop blacklister 2> /dev/null
 systemctl disable blacklister 2> /dev/null
 rm /etc/systemd/system/blacklister.service 2> /dev/null
+systemctl stop reporter 2> /dev/null
+systemctl disable reporter 2> /dev/null
+rm /etc/systemd/system/reporter.service 2> /dev/null
 systemctl daemon-reload 2> /dev/null
 systemctl reset-failed 2> /dev/null
 
@@ -55,7 +58,7 @@ function create_service {
 
 
 	mv $2.sh /usr/local/bin/
-	chmod 744 /usr/local/bin/$2.sh
+	chmod 755 /usr/local/bin/$2.sh
 
 
 	# Create a new service on the host and set it properly
@@ -65,7 +68,7 @@ function create_service {
 	After=network.target
 
 	[Service]
-	ExecStart=/usr/local/bin/$2.sh $3
+	ExecStart=/bin/bash /usr/local/bin/$2.sh $3
 	Restart=always
 	RestartSec=3
 
