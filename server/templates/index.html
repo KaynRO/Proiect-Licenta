@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        background-color: mintcream;
+      }
+      .collapsible {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+      }
+
+      /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+      .active,
+      .collapsible:hover {
+        background-color: #ccc;
+      }
+
+      /* Style the collapsible content. Note: hidden by default */
+      .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+      }
+      #innerDiv {
+        margin: 10px 0;
+        font-size: 12px;
+      }
+
+      #outerDiv {
+        margin: 10px 0;
+      }
+      #btn {
+        color: white;
+        margin: 10px 0;
+        font-size: 25px;
+      }
+      #btn1 {
+        margin: 10px 0;
+      }
+      #title {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+      }
+      #output {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1
+      id="title"
+      onClick="reload()"
+      class="badge"
+      style="font-size: 40px; background-color: black; text-align: center;"
+    >
+      Logs Application
+    </h1>
+    <br/><br/>
+    <!-- <img src="{{ url_for('static', filename='image/refresh.png') }}" style="width:20px;height:20px;" onClick="window.location.reload();"/> -->
+    <!-- <button onClick="window.location.reload();">Refresh Page</button>  -->
+    <div id="output" class="container" style="align-content: center"></div>
+    <script>
+      var fileDisplayArea = document.getElementById("output");
+      var prevData = "";
+      var logsArr = [];
+      const setTemplate = (data) => {
+        logsArr = [];
+        if (prevData == "") {
+          transformData(data);
+        } else if (data == prevData) {
+        } else if (data != prevData) {
+          transformData(data);
+        }
+      };
+
+      const transformData = (data) => {
+        var logs = data.split("[+]");
+        if (logs != null || logs != [] || logs != "") {
+          for (let i = 1; i < logs.length; i++) {
+            let cd = {
+              client: "",
+              noOfAlerts: 1,
+              suspicious_malicious_file: [],
+              Scan_URL: [],
+              Quarantined: [],
+              Timestamp: [],
+            };
+            let dividedLogs = logs[i].split(" New alert from ")[1].split("\n");
+            let alreadYAlerted = false;
+
+            for (let y = 0; y < logsArr.length; y++) {
+              if (logsArr[y]["client"] == dividedLogs[0].split(":")[0]) {
+                logsArr[y]["noOfAlerts"] = logsArr[y]["noOfAlerts"] + 1;
+                logsArr[y]["suspicious_malicious_file"].push(
+                  dividedLogs[1].split(":")[1]
+                );
+                logsArr[y]["Scan_URL"].push(
+                  dividedLogs[2]
+                    .split(":")[1]
+                    .concat(dividedLogs[2].split(":")[2])
+                );
+                logsArr[y]["Quarantined"].push(dividedLogs[3].split(":")[1]);
+                logsArr[y]["Timestamp"].push(
+                  dividedLogs[4]
+                    .split(":")[1]
+                    .concat(dividedLogs[4].split(":")[2])
+                );
+                alreadYAlerted = true;
+                break;
+              }
+            }
+
+            if (alreadYAlerted == false) {
+              cd["client"] = dividedLogs[0].split(":")[0];
+              cd["suspicious_malicious_file"].push(
+                dividedLogs[1].split(":")[1]
+              );
+              cd["Scan_URL"].push(
+                dividedLogs[2]
+                  .split(":")[1]
+                  .concat(dividedLogs[2].split(":")[2])
+              );
+              cd["Quarantined"].push(dividedLogs[3].split(":")[1]);
+              cd["Timestamp"].push(
+                dividedLogs[4]
+                  .split(":")[1]
+                  .concat(dividedLogs[4].split(":")[2])
+              );
+              logsArr.push(cd);
+            }
+          }
+        }
+        var clientData = "";
+        for (let i = 0; i < logsArr.length; i++) {
+          clientData += `<button type="button" id="btn" style="background-color: teal; color:#eee;"  class="badge">${logsArr[i]["client"]} : Alerts : <span class="badge rounded-pill bg-light text-dark">${logsArr[i]["noOfAlerts"]}</span></button>
+                        <br/> <div id="outerDiv" class="content">`;
+          for (
+            let j = 0;
+            j < logsArr[i]["suspicious_malicious_file"].length;
+            j++
+          ) {
+            clientData += `<button type="button" id='btn1' style="font-size:20px; background-color:#282A35; color:#eee;" class="badge">New suspicious/malicious file :  ${logsArr[i]["suspicious_malicious_file"][j]}</button>
+                                                        <br/><div id='innerDiv' class="badge" style="display: none; color:#000000; background-color:silver">
+                                                            <p style="font-size:15px;"><b>Scan_URL : </b> ${logsArr[i]["Scan_URL"][j]}</p>
+                                                            <p style="font-size:15px;"><b>Quarantined : </b>  ${logsArr[i]["Quarantined"][j]}</p> 
+                                                            <p style="font-size:15px;"><b>Timestamp : </b>  ${logsArr[i]["Timestamp"][j]}</p>
+                                                        </div>
+                                                        `;
+          }
+          clientData += `</div>`;
+        }
+        fileDisplayArea.innerHTML =
+          '<div class="badge bg-light text-dark" style="border:1px solid black;">' +
+          clientData +
+          "</div>";
+
+        var coll = document.getElementsByClassName("badge");
+        for (var i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            content = content.nextElementSibling;
+            // content = content.nextElementSibling;
+            if (content.style.display === "block") {
+              content.style.display = "none";
+            } else {
+              content.style.display = "block";
+            }
+          });
+        }
+        prevData = data;
+      };
+
+      function reload() {
+        window.location.reload();
+      }
+
+      function getLogData() {
+        setTimeout(function () {
+          fetch("/data")
+            .then((response) => response.text())
+            .then((data) => {
+              setTemplate(data);
+            });
+          getLogData();
+        }, 300000);
+      }
+
+      fetch("/data")
+        .then((response) => response.text())
+        .then((data) => {
+          setTemplate(data);
+          getLogData();
+        });
+    </script>
+  </body>
+</html>
