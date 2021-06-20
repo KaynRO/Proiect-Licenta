@@ -12,7 +12,7 @@ def create():
 
 @app.route('/data',methods = ['GET'])
 def readData():
-    f = open("static/log.txt", "r")
+    f = open("/root/log.txt", "r")
     data = str(f.read())
     res = Response(data,mimetype="text/xml")
     return res
