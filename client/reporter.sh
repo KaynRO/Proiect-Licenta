@@ -1,4 +1,4 @@
-	#!/bin/bash
+#!/bin/bash
 
 
 # The server IP will be given as argument to the script. The PORT is statically defined but can be changed.
