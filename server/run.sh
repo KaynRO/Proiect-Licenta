@@ -44,13 +44,13 @@ echo -e $GREEN"[+] Apache2 up and running."$ANSII_END
 # Download all the necessary files from the Github repository.
 mkdir -p /root/static/image
 mkdir -p /root/template/
-check_status curl --silent http://139.162.230.80/licenta/server.sh > /root/server.sh $RED"[!] server.sh script failed while downloading!"$ANSII_END
-check_status curl --silent http://139.162.230.80/licenta/blacklister.sh > /var/www/html/blacklister.sh $RED"[!] blacklister.sh script failed while downloading!"$ANSII_END
-check_status curl --silent http://139.162.230.80/licenta/reporter.sh > /var/www/html/reporter.sh $RED"[!] reporter.sh script failed while downloading!"$ANSII_END
-check_status curl --silent http://139.162.230.80/licenta/install.sh > /var/www/html/install.sh $RED"[!] reporter.sh script failed while downloading!"$ANSII_END
-check_status curl --silent http://139.162.230.80/licenta/logger.py > /root/logger.py $RED"[!] logger.py script failed while downloading!"$ANSII_END
-check_status curl --silent http://139.162.230.80/licenta/static/image/refresh.png > /root/static/image/refresh.png $RED"[!] logger.py script failed while downloading!"$ANSII_END
-check_status curl --silent http://139.162.230.80/licenta/template/index.html > /root/template/index.html $RED"[!] logger.py script failed while downloading!"$ANSII_END
+check_status wget -q http://139.162.230.80/licenta/server.sh -O /root/server.sh $RED"[!] server.sh script failed while downloading!"$ANSII_END
+check_status wget -q http://139.162.230.80/licenta/blacklister.sh -O /var/www/html/blacklister.sh $RED"[!] blacklister.sh script failed while downloading!"$ANSII_END
+check_status wget -q http://139.162.230.80/licenta/reporter.sh -O /var/www/html/reporter.sh $RED"[!] reporter.sh script failed while downloading!"$ANSII_END
+check_status wget -q http://139.162.230.80/licenta/install.sh -O /var/www/html/install.sh $RED"[!] reporter.sh script failed while downloading!"$ANSII_END
+check_status wget -q http://139.162.230.80/licenta/logger.py -O /root/logger.py $RED"[!] logger.py script failed while downloading!"$ANSII_END
+check_status wget -q http://139.162.230.80/licenta/static/image/refresh.png -O /root/static/image/refresh.png $RED"[!] logger.py script failed while downloading!"$ANSII_END
+check_status wget -q http://139.162.230.80/licenta/template/index.html -O /root/template/index.html $RED"[!] logger.py script failed while downloading!"$ANSII_END
 
 echo -e $GREEN"[+] Files successfully downloaded."$ANSII_END
 
