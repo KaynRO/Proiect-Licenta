@@ -56,6 +56,6 @@ echo -e $GREEN"[+] Files successfully downloaded."$ANSII_END
 
 
 # Move the server.sh file inside root directory and start it
-echo -e $GREEN"[+] Running server.sh."$ANSII_END
+echo -e $GREEN"[+] Running server and web application"$ANSII_END
+python /root/logger.py&
 bash /root/server.sh
-python /root/logger.py
