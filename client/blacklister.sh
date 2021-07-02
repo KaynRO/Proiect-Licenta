@@ -74,7 +74,7 @@ function process_file(){
 			chattr -i $LOGFILE
 			echo -e "[+] New suspicious/malicious file: $1\n    Scan URL: https://www.hybrid-analysis.com/sample/$sha256\n    Quarantined: $fn\n    Timestamp: `date +'%R %d/%m/%Y'`" >> $LOGFILE
 			chattr +i $LOGFILE
-			isolate_file $1 "$fn"
+			isolate_file "$1" "$fn"
 		fi
 	fi
 }
@@ -91,7 +91,10 @@ do
 	# Submit them to HybridAnalysis by spawning the function in the background.
 	while read -r i
 	do
-		process_file "$i" &
+		if [[ "$i" != "" ]]
+		then
+			process_file "$i" &
+		fi
 	done <<< "$new_files"
 
 	# Sleep for 5 seconds to avoid duplicate new file detection
